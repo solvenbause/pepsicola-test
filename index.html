@@ -261,7 +261,7 @@
     <!-- Кнопка управления музыкой -->
     <div class="music-control" id="music-toggle">🔊</div>
 
-    <script>
+<script>
         const quizData = [
             {
                 question: "Вы любите пепси/колу?",
@@ -549,6 +549,7 @@
             questionScreen.classList.remove('active');
             resultScreen.classList.add('active');
             
+            // Останавливаем фоновую музыку
             backgroundMusic.pause();
             isMusicPlaying = false;
             musicToggle.textContent = '🔇';
@@ -580,11 +581,31 @@
                 this.src = 'https://via.placeholder.com/250x250/004B93/FFFFFF?text=Ваше+Фото';
             };
             
-            audioPlayer.src = 'src/audo2.mp3'; 
+            // ИСПРАВЛЕНИЕ: исправлена опечатка в имени файла
+            audioPlayer.src = 'src/audio2.mp3'; // Было: 'src/audo2.mp3'
             
+            // Делаем плеер видимым
+            audioPlayer.style.display = 'block';
+            
+            // Пытаемся воспроизвести аудио результата
+            audioPlayer.play().catch(error => {
+                console.error('Ошибка воспроизведения аудио результата:', error);
+            });
+            
+            // Обработка ошибок загрузки аудиофайла
             audioPlayer.onerror = function() {
                 console.error('Ошибка загрузки аудиофайла результата');
+                // Скрываем плеер при ошибке загрузки
+                audioPlayer.style.display = 'none';
             };
+            
+            // Дополнительная проверка: если аудио не загрузилось через 2 секунды, скрываем плеер
+            setTimeout(() => {
+                if (audioPlayer.readyState === 0) { // HAVE_NOTHING - нет данных
+                    console.error('Аудиофайл результата не загрузился');
+                    audioPlayer.style.display = 'none';
+                }
+            }, 2000);
         }
 
         function restartQuiz() {
@@ -593,7 +614,10 @@
             resultScreen.classList.remove('active');
             startScreen.classList.add('active');
             
+            // Скрываем плеер с аудио результата при перезапуске
+            audioPlayer.style.display = 'none';
             audioPlayer.pause();
+            
             backgroundMusic.pause();
             backgroundMusic.currentTime = 0;
             isMusicPlaying = false;
