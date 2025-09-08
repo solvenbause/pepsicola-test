@@ -231,14 +231,13 @@
 </head>
 <body>
     <div class="container">
-        <!-- Стартовый экран -->
+        
         <div class="screen start-screen active">
             <h1>ОЦЕНИ СВОЮ ПЕПСИКОЛЬНОСТЬ</h1>
             <p>Пройди этот научный тест и узнай, насколько ты в теме современных трендов!!!</p>
             <button id="start-btn">Узнать свою пепсикольность</button>
         </div>
 
-        <!-- Экран вопроса -->
         <div class="screen question-screen">
             <div class="progress" id="progress">Вопрос 1 из 24</div>
             <h2 class="question" id="question-text"></h2>
@@ -246,7 +245,6 @@
             <button class="next-btn" id="next-btn" disabled>Далее</button>
         </div>
 
-        <!-- Экран результата -->
         <div class="screen result-screen">
             <h1>Ваш результат</h1>
             <div class="percentage" id="percentage">0%</div>
@@ -258,7 +256,6 @@
         </div>
     </div>
 
-    <!-- Кнопка управления музыкой -->
     <div class="music-control" id="music-toggle">🔊</div>
 
 <script>
@@ -494,7 +491,7 @@
         function startQuiz() {
             startScreen.classList.remove('active');
             questionScreen.classList.add('active');
-            
+    
             backgroundMusic.src = 'src/audio1.mp3'; 
             backgroundMusic.volume = 0.3;
             backgroundMusic.play().then(() => {
@@ -549,7 +546,7 @@
             questionScreen.classList.remove('active');
             resultScreen.classList.add('active');
             
-            // Останавливаем фоновую музыку
+
             backgroundMusic.pause();
             isMusicPlaying = false;
             musicToggle.textContent = '🔇';
@@ -581,27 +578,21 @@
                 this.src = 'https://via.placeholder.com/250x250/004B93/FFFFFF?text=Ваше+Фото';
             };
             
-            // ИСПРАВЛЕНИЕ: исправлена опечатка в имени файла
-            audioPlayer.src = 'src/audio2.mp3'; // Было: 'src/audo2.mp3'
-            
-            // Делаем плеер видимым
+            audioPlayer.src = 'src/audio2.mp3'; /
+           
             audioPlayer.style.display = 'block';
             
-            // Пытаемся воспроизвести аудио результата
             audioPlayer.play().catch(error => {
                 console.error('Ошибка воспроизведения аудио результата:', error);
             });
             
-            // Обработка ошибок загрузки аудиофайла
             audioPlayer.onerror = function() {
                 console.error('Ошибка загрузки аудиофайла результата');
-                // Скрываем плеер при ошибке загрузки
                 audioPlayer.style.display = 'none';
             };
             
-            // Дополнительная проверка: если аудио не загрузилось через 2 секунды, скрываем плеер
             setTimeout(() => {
-                if (audioPlayer.readyState === 0) { // HAVE_NOTHING - нет данных
+                if (audioPlayer.readyState === 0) { 
                     console.error('Аудиофайл результата не загрузился');
                     audioPlayer.style.display = 'none';
                 }
@@ -614,7 +605,6 @@
             resultScreen.classList.remove('active');
             startScreen.classList.add('active');
             
-            // Скрываем плеер с аудио результата при перезапуске
             audioPlayer.style.display = 'none';
             audioPlayer.pause();
             
@@ -626,4 +616,5 @@
     </script>
 </body>
 </html>
+
 
