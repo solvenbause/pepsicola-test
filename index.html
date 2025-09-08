@@ -557,28 +557,38 @@
             percentageElement.textContent = `${percentage}%`;
             
             let resultText = '';
+            // Условие для выбора изображения в зависимости от результата
+            let resultImage = '';
+            
             if (percentage >= 90) {
                 resultText = 'ТЫ ПЕПСИКОЛЕН ЛЕГЕНДА ^_^';
+                resultImage = 'src/image.jpg'; // Для высоких результатов
             } else if (percentage >= 70) {
                 resultText = 'Ну почти пепсиколен, уже ничего))))))))))';
+                resultImage = 'src/image.jpg'; // Для высоких результатов
             } else if (percentage >= 50) {
                 resultText = 'Чето слабо, нужно больше пепси в жизни(';
+                resultImage = 'src/image.jpg'; // Для результатов >= 50%
             } else if (percentage >= 30) {
                 resultText = 'Ну хз, подожди годик другой, потом запусти этот тест еще раз)))';
+                resultImage = 'src/image2.jpg'; // Для результатов < 50%
             } else if (percentage >= 10) {
                 resultText = 'м? Ты как ваще смог запустить это если у тебя такой уровень пепсикольности 0_0';
+                resultImage = 'src/image2.jpg'; // Для результатов < 50%
             } else {
                 resultText = 'Кринж.....';
+                resultImage = 'src/image2.jpg'; // Для результатов < 50%
             }
             
             resultTextElement.textContent = resultText;
             
-            morgensternImg.src = 'src/image.jpg'; 
+            // Устанавливаем изображение в зависимости от результата
+            morgensternImg.src = resultImage;
             morgensternImg.onerror = function() {
                 this.src = 'https://via.placeholder.com/250x250/004B93/FFFFFF?text=Ваше+Фото';
             };
             
-            audioPlayer.src = 'src/audio2.mp3'; /
+            audioPlayer.src = 'src/audio2.mp3';
            
             audioPlayer.style.display = 'block';
             
@@ -616,5 +626,3 @@
     </script>
 </body>
 </html>
-
-
